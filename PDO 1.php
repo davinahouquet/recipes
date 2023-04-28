@@ -3,7 +3,7 @@ try
 {// Souvent on identifie cet objet par la variable $conn ou $db
     //loggin
     $db = new PDO(
-        'mysql:host=127.0.0.1:3306;dbname=we_love_food;charset=utf8',
+        'mysql:host=127.0.0.1:3306;dbname=we_love_food;charset=utf8', //Veiller à bien utiliser le nom de la table !
         'root',
         '', //Paramètre mot de passe: aucun mot de passe requis lors de la création
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION], //Teste la présence d'erreurs (si rien n'est affiché = 0 erreur)
@@ -20,7 +20,7 @@ $recipes = $recipesStatement->fetchAll(); //"Fetch" en anglais signifie « va ch
 try
 {
 	// On se connecte à MySQL
-	$mysqlClient = new PDO('mysql:host=localhost;dbname=my_recipes;charset=utf8', 'root', 'root');
+	$mysqlClient = new PDO('mysql:host=localhost;dbname=we_love_food;charset=utf8', 'root', '');
 }
 catch(Exception $e)
 {
@@ -34,12 +34,12 @@ catch(Exception $e)
 $sqlQuery = 'SELECT title, author FROM recipes';
 $recipesStatement1 = $mysqlClient->prepare($sqlQuery);
 $recipesStatement1->execute();
-$recipes = $recipesStatement->fetchAll();
+$recipes = $recipesStatement1->fetchAll();
 
 // On affiche chaque recette une à une
 foreach ($recipes as $recipe) {
 
-    echo "<p>".$recipe['author']."</p>";
+    echo "<p>".$recipe['title']. " ".$recipe['author']."</p>";
 
 }
 ?>
